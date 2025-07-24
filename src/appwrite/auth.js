@@ -18,6 +18,7 @@ export class AuthService {
   async createAccount({ email, password, name }) {
     // signup
     try {
+      console.log("Generated userId:", ID.unique());
       const userAccount = await this.account.create(
         ID.unique(),
         email,
@@ -26,6 +27,7 @@ export class AuthService {
       );
       if (userAccount) {
         // call another method
+        console.log("going to login");
         return this.login({ email, password }); // agar register hogya to login mbhi kardo  (apni marzi hai)
       } else {
         return userAccount;
@@ -37,8 +39,9 @@ export class AuthService {
 
   async login({ email, password }) {
     try {
-      return await this.account.createEmailSession(email, password);
+      return await this.account.createEmailPasswordSession(email, password);
     } catch (error) {
+      console.log("Appwrite service :: login :: error", error);
       throw error;
     }
   }

@@ -20,6 +20,7 @@ export class Service {
 
   async createPost({ title, slug, content, featuredImage, status, userId }) {
     try {
+      console.log("userId", userId);
       return await this.databases.createDocument(
         conf.appwriteDatabaseId,
         conf.appwriteCollectionId,
@@ -120,6 +121,7 @@ export class Service {
   }
 
   getFilePreview(fileId) {
+    // getFileView   it is actually
     return this.bucket.getFileView(conf.appwriteBucketId, fileId);
   }
 }
