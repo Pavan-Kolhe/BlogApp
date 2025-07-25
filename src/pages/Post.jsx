@@ -13,7 +13,8 @@ export default function Post() {
 
   const userData = useSelector((state) => state.auth.userData);
 
-  const isAuthor = post && userData ? post.userId === userData.$id : false;
+  const isAuthor =
+    post && userData ? post.userId === userData.userData.$id : false;
 
   useEffect(() => {
     if (slug) {
@@ -57,9 +58,13 @@ export default function Post() {
           )}
         </div>
         <div className="w-full mb-6">
-          <h1 className="text-2xl font-bold">{post.title}</h1>
+          <h1 className="text-white text-center text-3xl font-bold">
+            {post.title}
+          </h1>
         </div>
-        <div className="browser-css">{parse(post.content)}</div>
+        <div className="p-5 text-white text-2xl border browser-css">
+          {parse(post.content)}
+        </div>
       </Container>
     </div>
   ) : null;
