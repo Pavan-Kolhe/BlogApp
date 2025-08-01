@@ -7,7 +7,7 @@ conf;
 function PostCard({ $id, title, featuredImage }) {
   return (
     <Link to={`/post/${$id}`}>
-      <div className="w-full h-80 bg-gray-100 rounded-xl p-4">
+      <div className="w-full h-80 bg-gray-700 rounded-xl p-4">
         <div className="w-full justify-center mb-4">
           <img
             src={appwriteService.getFilePreview(featuredImage)}
@@ -16,7 +16,7 @@ function PostCard({ $id, title, featuredImage }) {
             className="mb-auto rounded-xl"
           />
         </div>
-        <h2 className="mt-3 text-xl font-bold">{title}</h2>
+        <h2 className="mt-3 text-xl font-bold text-gray-200">{title}</h2>
       </div>
     </Link>
   );

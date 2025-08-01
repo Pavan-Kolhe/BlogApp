@@ -122,6 +122,7 @@ export class Service {
 
   getFilePreview(fileId) {
     // getFileView   it is actually
+    // console.log("fileId", fileId);
     return this.bucket.getFileView(conf.appwriteBucketId, fileId);
   }
 }

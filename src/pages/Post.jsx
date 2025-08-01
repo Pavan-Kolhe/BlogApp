@@ -3,31 +3,34 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import appwriteService from "../appwrite/config";
 import { Button, Container } from "../components";
 import parse from "html-react-parser";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import conf from "../conf/conf";
+import { deletePost as deletePostInStore } from "../store/postSlice";
 
 export default function Post() {
   const [post, setPost] = useState(null);
   const { slug } = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const userData = useSelector((state) => state.auth.userData);
+  const posts = useSelector((state) => state.posts.postsData);
 
   const isAuthor =
     post && userData ? post.userId === userData.userData.$id : false;
 
   useEffect(() => {
     if (slug) {
-      appwriteService.getPost(slug).then((post) => {
-        if (post) setPost(post);
-        else navigate("/");
-      });
+      const foundPost = posts.find((post) => post.$id === slug);
+      if (foundPost) setPost(foundPost);
+      else navigate("/");
     } else navigate("/");
-  }, [slug, navigate]);
+  }, [slug, navigate, posts]);
 
   const deletePost = () => {
     appwriteService.deletePost(post.$id).then((status) => {
       if (status) {
+        dispatch(deletePostInStore(post.$id));
         appwriteService.deleteFile(post.featuredImage);
         navigate("/");
       }

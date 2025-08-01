@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
 import { Container, PostCard } from "../components/index.js";
-import appwriteService from "../appwrite/config";
+import authService from "../appwrite/auth.js";
 import { useSelector } from "react-redux";
 
-function AllPosts() {
+function MyPosts() {
+  const userData = useSelector((state) => state.auth.userData);
   const posts = useSelector((state) => state.posts.postsData);
   return (
     <div className="w-full py-8">
@@ -11,6 +11,9 @@ function AllPosts() {
         <div className="flex flex-wrap">
           {posts.map((post) => {
             // console.log(post); // Check if featuredImage exists
+            if (post.userId !== userData.userData.$id) {
+              return null;
+            }
             return (
               <div key={post.$id} className="p-2 w-1/4">
                 <PostCard {...post} />
@@ -23,4 +26,4 @@ function AllPosts() {
   );
 }
 
-export default AllPosts;
+export default MyPosts;
